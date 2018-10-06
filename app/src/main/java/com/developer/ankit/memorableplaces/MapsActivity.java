@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.lang.Exception;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -130,10 +131,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     @Override
-    public void onMapLongClick(LatLng latLng) {
+    public void onMapLongClick(LatLng latLng) throws Exception{
         Geocoder mGeoCoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         String result = "";
-        try {
+        
 
             List<Address> list = mGeoCoder.getFromLocation(latLng.latitude,latLng.longitude,1);
             if(list!=null && list.size()>0){
@@ -143,10 +144,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     result+=list.get(0).getThoroughfare();
 
 
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         if(result== ""){
             SimpleDateFormat sdf = new SimpleDateFormat("HH : mm yyyy-MM-dd");
             result = sdf.format(new Date());

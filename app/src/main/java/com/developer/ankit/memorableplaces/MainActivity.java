@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
+import java.lang.Exception;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     static ArrayAdapter mArrayAdapter ;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) throws Exception {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mListView = (ListView) findViewById(R.id.list_view);
@@ -34,16 +35,14 @@ public class MainActivity extends AppCompatActivity {
         latitudes.clear();
         longitudes.clear();
         location.clear();
-        try {
+        
+        
             data = (ArrayList<String>)ObjectSerializer.deserialize(prefs.getString("places",ObjectSerializer.serialize(new ArrayList<String>())));
             latitudes = (ArrayList<String>)ObjectSerializer.deserialize(prefs.getString("lat",ObjectSerializer.serialize(new ArrayList<String>())));
             longitudes = (ArrayList<String>)ObjectSerializer.deserialize(prefs.getString("lng",ObjectSerializer.serialize(new ArrayList<String>())));
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        
         if(data.size()>0 && latitudes.size()>0 && longitudes.size()>0){
             if(data.size()==latitudes.size() && latitudes.size()==longitudes.size()){
                 for(int i =0;i<latitudes.size();i++)
